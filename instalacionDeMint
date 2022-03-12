@@ -34,7 +34,6 @@ echo -e "${GREEN}esto es verde pa${ENDCOLOR}"
 
 #Programas que tengo que lograr instalar:
 #snapd-Discord-Steam-Navegador Brave-Sublime Text-Mozilla Firefox-Spotifai
-
 #Configuraciones del sistema en general
 #sensibildad del mouse, cambio de fondo de pantalla, iconos anclados en la 
 #en la barra de tareas, sonidos predeterminados, preferencias de apariencia
@@ -43,25 +42,29 @@ echo -e "${GREEN}esto es verde pa${ENDCOLOR}"
 
 
 #Empezamos con el script. Primero una actualizacion de importancia
-ACTUALIZADO="El sistema esta actualizado en estos momentos"
-sudo apt update && sudo apt upgrade -y && \ 
-| echo -e "${GREEN}$ACTUALIZADO${ENDCOLOR}"
+ACTUALIZADO="El sistema ha sido actualizado"
+
+sudo apt update && sudo apt upgrade -y && \
+echo -e "${GREEN}$ACTUALIZADO${ENDCOLOR}"
 
 #Instalacion de 'snapd'
-sudo rm /etc/apt/preferences.d/nosnap.pref && sudo apt update && \ 
-| sudo apt install snapd -y && snap install hello-world && hello-world
+sudo rm /etc/apt/preferences.d/nosnap.pref && sudo apt update && \
+sudo apt install snapd -y && snap install hello-world && hello-world
 
 sleep 2
 
 #Creacion de mis directorios hasta el momento
-cd && pwd && mkdir 4kall test && cd 4kall && mkdir PDFs DriverExes Fotos && cd
+cd && pwd && mkdir 4kall test && cd 4kall && \
+mkdir PDFs DriverExes Fotos && cd
 
 #Instalaciones de programas con SNAPD
 SNAPPS="${GREEN}En proceso de instalar: \nDiscord \nSpotify \nVLC${ENDCOLOR}"
 
 echo -e "${GREEN}$SNAPPS${ENDCOLOR}"; sleep 1
 
-cd test/ && sudo snap install discord && systemctl status discord > discordstat
-echo < discordstat && sleep 1 && sudo snap install spotify && \ 
-| sudo snap install vlc && echo -e "${YELLOWLIGHT}SNAP ha instalado todo
-${ENDCOLOR}"
+cd test/ && sudo snap install discord && systemctl \
+status discord > discordstat
+
+echo < discordstat && sleep 1 && sudo snap install spotify && \
+sudo snap install vlc && echo \
+-e "${YELLOWLIGHT}SNAP ha instalado todo${ENDCOLOR}"
