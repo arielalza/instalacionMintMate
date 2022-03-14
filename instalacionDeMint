@@ -58,8 +58,6 @@ yellowstrong=$(tput setaf 190)
 # "ariel" pero era el usuario que se creo durante la instalacion. Ningun otro
 ACTUALIZADO="El sistema esta actualizado en estos momentos"
 
-sudo usermod -aG sudo $USER && id $USER
-
 sudo apt update && sudo apt upgrade -y && \
 echo -e "${GREEN}$ACTUALIZADO${ENDCOLOR}"
 
@@ -129,4 +127,15 @@ echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
 sudo apt install -y google-chrome-stable && echo -e \
 "${GREEN}Google it's ready${ENDCOLOR}"
 
-#Wine installation
+#Wine installation with the WineHQ repository but this requires a extra
+#installation with the command "$wine winecfg" es una pedazo de mierda el
+#programita, no encuentro como resolverlo, me paso parecido con steam.Aggg..
+
+wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
+sudo -H gpg -o /etc/apt/trusted.gpg.d/winehq.key.gpg --dearmor winehq.key && \
+sudo add-apt-repository \
+'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
+sudo apt update && sudo apt install --install-recommends winehq-stable && \
+wine --version
+
+#CONFIGURACION DEL SISTEMA [4]
