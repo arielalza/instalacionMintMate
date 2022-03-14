@@ -1,4 +1,5 @@
 # instalacionMintMate DescripcionEnEspañol
+#Correr el script con sudo es un paso importantisimo.
 
 La primera instalación de mi Mint Mate con scripts, si formateaste el sistema
 no tendrás disponible git porque no está instalado aun. Si lo instalas de forma manual
