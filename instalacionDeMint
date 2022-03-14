@@ -27,44 +27,106 @@ yellowstrong=$(tput setaf 190)
 #echo -e "${yellowstrong}este texto deberia ser amarillo"
 
 #Esto de abajo es una simple prueba de colores
-echo -e "${LIGHTMAGENTA}este texto debe ser magenta liviano${ENDCOLOR}"
-echo -e "${BLUELIGHT}azul livianito pa${ENDCOLOR}"
-echo -e "${YELLOWLIGHT}amarillo patito pa${ENDCOLOR}"
-echo -e "${GREEN}esto es verde pa${ENDCOLOR}"
+#echo -e "${LIGHTMAGENTA}este texto debe ser magenta liviano${ENDCOLOR}"
+#echo -e "${BLUELIGHT}azul livianito pa${ENDCOLOR}"
+#echo -e "${YELLOWLIGHT}amarillo patito pa${ENDCOLOR}"
+#echo -e "${GREEN}esto es verde pa${ENDCOLOR}"
 
-#Programas que tengo que lograr instalar:
+#ACA IRA EL MENU UNA VEZ LO HAGAMOS XD
+
+
+###############################################################################
+#Actualizacion [1]
+
+#Creacion de directorios [2]
+
+#Programas que tengo que lograr instalar: [3]
 #snapd-Discord-Steam-Navegador Brave-Sublime Text-Mozilla Firefox-Spotifai
-#Configuraciones del sistema en general
+#Google-chrome-Origin
+
+#Configuraciones del sistema en general [4]
 #sensibildad del mouse, cambio de fondo de pantalla, iconos anclados en la 
 #en la barra de tareas, sonidos predeterminados, preferencias de apariencia
 #esto teorimcamente es todo lo que debo hacer, poquito por ahora creo.
 
+###############################################################################
 
+#ACTUALIZACION DEL SISTEMA[1] 
 
-#Empezamos con el script. Primero una actualizacion de importancia
-ACTUALIZADO="El sistema ha sido actualizado"
+#Esta parte esta pensada para solamente agregar al usuario inicial al grupo
+#de sudo, funciono probandolo en una maquina virtual, donde mi usuario era
+# "ariel" pero era el usuario que se creo durante la instalacion. Ningun otro
+ACTUALIZADO="El sistema esta actualizado en estos momentos"
+
+sudo usermod -aG sudo $USER && id $USER
 
 sudo apt update && sudo apt upgrade -y && \
 echo -e "${GREEN}$ACTUALIZADO${ENDCOLOR}"
 
-#Instalacion de 'snapd'
+###############################################################################
+
+#CREACION DE DIRECTORIOS [2]
+echo -e "${GREEN}Se crearan los directorios personales${ENDCOLOR}" && \
+sleep 2 && cd && pwd && mkdir 4kall test && cd 4kall && mkdir PDFs \
+DriverExes Fotos && cd && echo -e \
+"${GREEN}Los directorios fueron creados correctamente${ENDCOLOR}"
+
+###############################################################################
+
+#INSTALACION DE LOS PROGRAMAS CON REBOOT PARA REFRESCAR EL SISTEMA[3]
+
+echo -e "${GREEN}Los programas seran instalados, esto tardara...${ENDCOLOR}"
+
+#Instalacion de 'snapd' y si el test del helloword
+echo -e "${GREEN}Iniciara la instalacion de snapd${ENDCOLOR}" && sleep 1
+
 sudo rm /etc/apt/preferences.d/nosnap.pref && sudo apt update && \
-sudo apt install snapd -y && snap install hello-world && hello-world
+sudo apt install snapd -y && sleep 2 && cd /home/ariel/test && \
+snap install hello-world && sleep 1 && hello-world && sleep 2
 
-sleep 2
+#sublime-text install
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key \
+add - && sudo apt-get install apt-transport-https && echo \
+"deb https://download.sublimetext.com/ apt/stable/" | sudo tee \
+/etc/apt/sources.list.d/sublime-text.list && sudo apt-get update && sudo \
+apt-get install sublime-text && sleep 2
 
-#Creacion de mis directorios hasta el momento
-cd && pwd && mkdir 4kall test && cd 4kall && \
-mkdir PDFs DriverExes Fotos && cd
+#discord install with .deb package
+wget -O discord "https://discord.com/api/download?platform=linux&format=deb" \
+&& sudo dpkg -i discord
 
-#Instalaciones de programas con SNAPD
-SNAPPS="${GREEN}En proceso de instalar: \nDiscord \nSpotify \nVLC${ENDCOLOR}"
+#steam install but not full installed piece of shit
+sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install \
+wget gdebi-core libgl1-mesa-glx:i386 -y && wget -O ~/steam.deb \
+http://media.steampowered.com/client/installer/steam.deb && \
+sudo gdebi -y ~/steam.deb
 
-echo -e "${GREEN}$SNAPPS${ENDCOLOR}"; sleep 1
+#navegador brave install
+keyring="brave-browser-archive-keyring.gpg"
+release="brave-browser-apt-release.s3.brave.com"
 
-cd test/ && sudo snap install discord && systemctl \
-status discord > discordstat
+sudo apt install apt-transport-https curl && sudo curl -fsSLo \
+/usr/share/keyrings/$keyring https://$release/$keyring && echo \
+"deb [signed-by=/usr/share/keyrings/$keyring arch=amd64] \
+https://$release/ stable main" -y | sudo tee /etc/apt/sources.list.d/\
+brave-browser-release.list && sudo apt update && sudo apt install \
+brave-browser && sleep 1 && echo -e "${GREEN}FINISH${ENDCOLOR}"
 
-echo < discordstat && sleep 1 && sudo snap install spotify && \
-sudo snap install vlc && echo \
--e "${YELLOWLIGHT}SNAP ha instalado todo${ENDCOLOR}"
+#Spotify installation
+#Creo que deje tremendo spanglish en el script pero ya fue
+
+curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | \
+sudo apt-key add - && echo "deb http://repository.spotify.com/ stable \
+non-free" | sudo tee /etc/apt/sources.list.d/spotify.list && \
+sudo apt-get update && sudo apt-get install spotify-client && spotify --version
+
+#Google Chrome installation with chrome repository (other option is .deb pack)
+
+sudo apt update && wget -q -O \
+- https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
+| sudo tee /etc/apt/sources.list.d/google-chrome.list && sudo apt update && \
+sudo apt install -y google-chrome-stable && echo -e \
+"${GREEN}Google it's ready${ENDCOLOR}"
+
+#Wine installation
