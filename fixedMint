@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+#Date: 09/03/2022 ## Version del sistema: Linux Mint.Mate.20.2
+#Date: 14/03/2022 ## El script sera actualizado con mas contenido para gaming
+
+#ANCI Colors and tput
+ENDCOLOR="\e[0m"
+BLUELIGHT="\e[1;94m"
+YELLOWLIGHT="\e[1;93m"
+LIGHTMAGENTA="\e[1;95m"
+GREEN="\e[1;32m"
+yellowstrong=$(tput setaf 190)
+
+###############################################################################
+
+#ACTUALIZACION DEL SISTEMA Y CREACION DE DIRECTORIOS[1] 
+
+sudo apt update && sudo apt upgrade -y 
+sleep 3
+cd ~/ && mkdir 4kall test && cd 4kall && mkdir PDFs \
+DriverExes Fotos && cd
+
+#Poner un escho informando la creacion de directorios
+
+###################>>>>>KEYS PARA LOS PROGRAMAS<<<<<###########################
+sudo rm /etc/apt/preferences.d/nosnap.pref
+
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key \
+add - && sudo apt-get install apt-transport-https && echo \
+"deb https://download.sublimetext.com/ apt/stable/" | sudo tee \
+/etc/apt/sources.list.d/sublime-text.list
+
+wget -O discord "https://discord.com/api/download?platform=linux&format=deb"
+
+sudo dpkg --add-architecture i386 && \
+sudo apt install wget gdebi-core libgl1-mesa-glx:i386 -y && \
+wget -O ~/steam.deb http://media.steampowered.com/client/installer/steam.deb
+
+sudo curl -fsSLo /usr/share/keyrings/$keyring https://$release/$keyring && \
+echo "deb [signed-by=/usr/share/keyrings/$keyring arch=amd64] \
+https://$release/ stable main" -y | sudo \
+tee /etc/apt/sources.list.d/brave-browser-release.list
+
+curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | \
+sudo apt-key add - && echo "deb http://repository.spotify.com/ stable \
+non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | \
+sudo apt-key add - && echo "deb [arch=amd64] \
+http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee \
+/etc/apt/sources.list.d/google-chrome.list
+
+wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
+sudo -H gpg -o /etc/apt/trusted.gpg.d/winehq.key.gpg --dearmor winehq.key && \
+sudo add-apt-repository \
+'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+###############################################################################
+#APT UPDATE GENERAL PARA LAS >>>>>KEYS<<<<<
+sudo apt update
+
+#INSTALACION DE LOS PROGRAMAS CON REBOOT OPCIONAL[2]
+#Cuando hagamos el menu poner un echo con el titulo
+
+##Instalacion de 'snapd'
+sudo apt install snapd -y
+
+##sublime-text install
+sudo apt install sublime-text
+
+##discord install with .deb package
+sudo dpkg -i discord
+
+##steam install
+sudo gdebi -y ~/steam.deb
+
+#navegador brave install
+keyring="brave-browser-archive-keyring.gpg"
+release="brave-browser-apt-release.s3.brave.com"
+sudo apt install brave-browser && sleep 3
+
+#Spotify installation
+sudo apt-get install spotify-client && spotify --version
+
+#Google Chrome installation with chrome repository (other option is .deb pack)
+sudo apt install -y google-chrome-stable
+
+#Wine installation with the WineHQ repository
+#this requires a extra installation with the command "$wine winecfg"
+sudo apt install --install-recommends winehq-stable && wine --version
+
+#CONFIGURACION DEL SISTEMA [3]
