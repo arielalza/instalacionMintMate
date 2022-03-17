@@ -1,0 +1,24 @@
+#Anotaciones personales sobre este script en general
+
+
+#Esto es con la forma de ANSI color codes para este bash script
+ENDCOLOR="\e[0m"
+BLUELIGHT="\e[1;94m"
+YELLOWLIGHT="\e[1;93m"
+LIGHTMAGENTA="\e[1;95m"
+GREEN="\e[1;32m"
+
+#SON ejemplos estos son utilizados en los ejemplos de abajo
+#REDLINE="\e[4;31m"
+#echo -e "${BLUE}este texto deberia ser azul${ENDCOLOR}"
+#Esto seria con "tput"
+yellowstrong=$(tput setaf 190)
+#echo -e "${yellowstrong}este texto deberia ser amarillo"
+
+#Esto de abajo es una simple prueba de colores
+#echo -e "${LIGHTMAGENTA}este texto debe ser magenta liviano${ENDCOLOR}"
+#echo -e "${BLUELIGHT}azul livianito pa${ENDCOLOR}"
+#echo -e "${YELLOWLIGHT}amarillo patito pa${ENDCOLOR}"
+#echo -e "${GREEN}esto es verde pa${ENDCOLOR}"
+
+https://itsfoss.com/live-usb-with-dd-command/
