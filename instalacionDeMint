@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 #Date: 09/03/2022 ## Version del sistema: Linux Mint.Mate.20.2
-#Date: 14/03/2022 ## El script sera actualizado con mas contenido para gaming
+#Date: 29/03/2022 ## El script fue armado de manera muy basica debido
+##Que en mi pc principal no puedo hacer andar linux, he dejado una
+#configuracion con las cosas que he utilizado para estudiar, que no es mucho :) 
 
 #ANCI Colors and tput
 ENDCOLOR="\e[0m"
@@ -15,27 +17,15 @@ yellowstrong=$(tput setaf 190)
 
 #ACTUALIZACION DEL SISTEMA Y DIRECTORIOS[1] 
 
-ACTUALIZADO="El sistema esta actualizado en estos momentos"
+sudo apt update && sudo apt upgrade -y && sleep 3
 
-sudo apt update && sudo apt upgrade -y < $STDOUT ~ && \
-echo -e "${GREEN}$ACTUALIZADO${ENDCOLOR}"
-sleep 3
-cd ~/ && mkdir 4kall test && cd 4kall && mkdir PDFs \
-DriverExes Fotos && cd && echo -e \
-"${GREEN}Los directorios fueron creados correctamente${ENDCOLOR}"
+cd ~/ && mkdir 4kall test && cd 4kall && mkdir PDFs DriverExes Fotos && sleep 3
 
 ###############################################################################
 
-#KEYS PARA LOS PROGRAMAS
-
-
-#APT UPDATE GENERAL PARA LOS PROGRAMAS
-sudo apt update
 #INSTALACION DE LOS PROGRAMAS CON REBOOT OPCIONAL[2]
 
-echo -e "${GREEN}Los programas seran instalados, esto tardara...${ENDCOLOR}"
-
-#Instalacion de 'snapd' y si el test del helloword
+#Instalacion de 'snapd'
 sudo rm /etc/apt/preferences.d/nosnap.pref && sudo apt update && \
 sudo apt install snapd -y
 
@@ -45,16 +35,6 @@ add - && sudo apt-get install apt-transport-https && echo \
 "deb https://download.sublimetext.com/ apt/stable/" | sudo tee \
 /etc/apt/sources.list.d/sublime-text.list && sudo apt-get update && sudo \
 apt-get install sublime-text && sleep 2
-
-#discord install with .deb package
-wget -O discord "https://discord.com/api/download?platform=linux&format=deb" \
-&& sudo dpkg -i discord
-
-#steam install but not full installed piece of shit
-sudo dpkg --add-architecture i386 && sudo apt update && sudo apt install \
-wget gdebi-core libgl1-mesa-glx:i386 -y && wget -O ~/steam.deb \
-http://media.steampowered.com/client/installer/steam.deb && \
-sudo gdebi -y ~/steam.deb
 
 #navegador brave install
 keyring="brave-browser-archive-keyring.gpg"
@@ -67,13 +47,6 @@ https://$release/ stable main" -y | sudo tee /etc/apt/sources.list.d/\
 brave-browser-release.list && sudo apt update && sudo apt install \
 brave-browser && sleep 1 && echo -e "${GREEN}FINISH${ENDCOLOR}"
 
-#Spotify installation
-
-curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | \
-sudo apt-key add - && echo "deb http://repository.spotify.com/ stable \
-non-free" | sudo tee /etc/apt/sources.list.d/spotify.list && \
-sudo apt-get update && sudo apt-get install spotify-client && spotify --version
-
 #Google Chrome installation with chrome repository (other option is .deb pack)
 
 sudo apt update && wget -q -O \
@@ -83,14 +56,8 @@ echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" \
 sudo apt install -y google-chrome-stable && echo -e \
 "${GREEN}Google it's ready${ENDCOLOR}"
 
-#Wine installation with the WineHQ repository
-#this requires a extra installation with the command "$wine winecfg"
+#Python 3.10 installation
 
-wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
-sudo -H gpg -o /etc/apt/trusted.gpg.d/winehq.key.gpg --dearmor winehq.key && \
-sudo add-apt-repository \
-'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
-sudo apt update && sudo apt install --install-recommends winehq-stable && \
-wine --version
-
-#CONFIGURACION DEL SISTEMA [3]
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa -y && sudo apt update
+sudo apt install python3.10 -y
