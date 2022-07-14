@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-#Date: 09/03/2022 ## Version del sistema: Linux Mint.Mate.20.2
-#Date: 29/03/2022 ## El script fue armado de manera muy basica debido
-##Que en mi pc principal no puedo hacer andar linux, he dejado una
-#configuracion con las cosas que he utilizado para estudiar, que no es mucho :) 
+#14/07/2022 Linux Mint Xfce
 
 #ANCI Colors and tput
 ENDCOLOR="\e[0m"
